@@ -22,7 +22,7 @@ jobs:
             mkdir root_build root_install
             cd root_build
             cmake -DCMAKE_INSTALL_PREFIX=root_install -DCMAKE_CXX_STANDARD=20 -DCXX_STANDARD_STRING=20 ..
-            cmake --build . --target install
+            cmake --build . --target install -j
       - name: create-artifact
         run: |
             touch test-artifact
