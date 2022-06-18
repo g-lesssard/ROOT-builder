@@ -1,0 +1,29 @@
+name: ROOT-BUILDER
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-focal-C++20:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: install-dependencies
+        run: |
+          apt update && sudo apt-get install dpkg-dev cmake g++ gcc binutils libx11-dev libxpm-dev libxft-dev libxext-dev python-is-python3 libssl-dev
+          apt install gfortran libpcre3-dev xlibmesa-glu-dev libglew1.5-dev libftgl-dev libmysqlclient-dev libfftw3-dev libcfitsio-dev graphviz-dev libavahi-compat-libdnssd-dev libldap2-dev python-dev libxml2-dev libkrb5-dev libgsl0-dev qtwebengine5-dev
+      - name: clone-repo
+        run: |
+            git clone --branch latest-stable --depth=1 https://github.com/root-project/root.git root_src
+      - name: build-root
+        run: |
+            touch test-artifact
+      - name: publish-artifact
+        uses: actions/upload-artifact@v2
+        with:
+            name: test
+            path: test-artifact  
+
+  
